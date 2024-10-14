@@ -6,6 +6,7 @@ const size_t COUNT_VERTICES = 6;
 void creating(Graph&);
 void test1(Graph&);
 void test2(Graph&);
+void test3(Graph&);
 
 int main() {
     size_t x; // длина для задания
@@ -20,6 +21,9 @@ int main() {
     graph.showAdjacencyList();
 
     test2(graph);
+    graph.showAdjacencyList();
+
+    test3(graph);
     graph.showAdjacencyList();
 
     return 0;
@@ -44,12 +48,15 @@ void creating(Graph& graph) {
 }
 
 void test1(Graph& graph) {
-    graph.DEL_V('B');
     graph.DEL_V('A');
-    graph.DEL_V('E');
 }
 
 void test2(Graph& graph) {
-    graph.ADD_V('B');
-    graph.ADD_E('B', 'D', 4);
+    graph.ADD_V('A');
+    graph.ADD_E('A', 'C', 7);
+    graph.ADD_E('A', 'B', 5);
+}
+
+void test3(Graph& graph) {
+    graph.EDIT_E('A', 'C', 100);
 }

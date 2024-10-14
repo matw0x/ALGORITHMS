@@ -188,8 +188,6 @@ public:
         --NV;
         std::cout << "[DEBUG] Vertex " << name << " deleted successfully!\n";
     }
-
-
 };
 
 const size_t COUNT_VERTICES = 6;
