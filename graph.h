@@ -68,7 +68,7 @@ public:
         PRINT_STARS;
     }
 
-    void ADD_V(const char& name) {
+    void ADD_V(const char& name) noexcept {
         for (size_t i = 0; i != countVertices; ++i) {
             if (vertices[i].name == name) {
                 std::cout << "ADD_V: Vertex " << name << " already exists!\n";
@@ -93,7 +93,7 @@ public:
         }
     }
 
-    void ADD_E(const char& vName, const char& wName, const float& c) {
+    void ADD_E(const char& vName, const char& wName, const float& c) noexcept {
         if (NE >= countEdges) {
             std::cout << "ADD_E: Could not add an edge from/to " << vName << '/' << wName << " | NE >= countEdges!\n";
             return;
@@ -124,7 +124,7 @@ public:
         ++NE;
     }
 
-    void DEL_V(const char& name) {
+    void DEL_V(const char& name) noexcept {
         Vertex* vertexToDelete = findVertexByName(name);
         if (vertexToDelete == nullptr) {
             std::cout << "DEL_V: The vertex " << name << " was not found!\n";
@@ -171,7 +171,7 @@ public:
         --NV;
     }
 
-    void DEL_E(const char& vName, const char& wName) {
+    void DEL_E(const char& vName, const char& wName) noexcept {
         Vertex* from = findVertexByName(vName);
         Vertex* to = findVertexByName(wName);
 
@@ -212,7 +212,7 @@ public:
         }
     }
 
-    void EDIT_V(const char& name, const bool& newVisited) {
+    void EDIT_V(const char& name, const bool& newVisited) const noexcept {
         bool success = false;
         for (size_t i = 0; i != NV; ++i) {
             if (vertices[i].name == name) {
@@ -224,7 +224,7 @@ public:
         if (!success) std::cout << "EDIT_V: Vertex " << name << " was not found!\n";
     }
 
-    void EDIT_E(const char& vName, const char& wName, const float& newCost) {
+    void EDIT_E(const char& vName, const char& wName, const float& newCost) const noexcept {
         Vertex* from = findVertexByName(vName);
         Vertex* to = findVertexByName(wName);
 
@@ -248,5 +248,56 @@ public:
             if (current->edge->to == to) current->edge->cost = newCost;
             current = current->next;
         }
+    }
+
+    size_t FIRST(const char& name) const noexcept {
+        Vertex* from = findVertexByName(name);
+        if (from == nullptr) {
+            std::cout << "FIRST: Vertex " << name << " was not found!\n";
+            return countVertices + 1;
+        }
+
+        AdjNode* current = adjLists[from->number].head;
+        if (current == nullptr) return countVertices + 1;
+
+        return current->edge->to->number;
+    }
+
+    size_t NEXT(const char& name, const size_t& i) const noexcept {
+        Vertex* from = findVertexByName(name);
+        if (from == nullptr) {
+            std::cout << "NEXT: Vertex " << name << " was not found!\n";
+            return countVertices + 1;
+        }
+
+        AdjNode* current = adjLists[from->number].head;
+        if (current == nullptr) return countVertices + 1;
+
+        while (current != nullptr) {
+            if (current->edge->to->number == i) {
+                if (current->next != nullptr) return current->edge->to->number;
+                else return countVertices + 1;
+            }
+
+            current = current->next;
+        }
+
+        return countVertices + 1;
+    }
+
+    Vertex* VERTEX(const char& name, const size_t& i) const noexcept {
+        Vertex* from = findVertexByName(name);
+        if (from == nullptr) {
+            std::cout << "VERTEX: Vertex " << name << " was not found!\n";
+            return nullptr;
+        }
+
+        AdjNode* current = adjLists[from->number].head;
+        while (current != nullptr) {
+            if (current->edge->to->number == i) return current->edge->to;
+            current = current->next;
+        }
+
+        return nullptr;
     }
 };
