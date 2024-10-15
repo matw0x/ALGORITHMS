@@ -11,12 +11,12 @@ struct Vertex {
     
     Vertex() : name(' '), number(size_t(-1)), visited(false) {}
 
-    bool isVisited() const noexcept {
-        return visited == true;
-    }
-
     void setVisited() noexcept {
         visited = true;
+    }
+
+    void unsetVisited() noexcept {
+        visited = false;
     }
 
     void operator = (const Vertex& v) {

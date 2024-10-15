@@ -20,6 +20,8 @@ private:
     size_t* deletedNumbers; // удалённые индексы | решение проблем с дырами
     size_t deletedCount; // кол-во удалённых
 
+    const size_t UNREAL_VALUE = this->countVertices + 1;
+
     Vertex* findVertexByName(const char& vertexName) const noexcept {
         for (size_t i = 0; i != countVertices; ++i) {
             if (vertices[i].name == vertexName && vertices[i].name != '-') return &vertices[i];
@@ -254,11 +256,11 @@ public:
         Vertex* from = findVertexByName(name);
         if (from == nullptr) {
             std::cout << "FIRST: Vertex " << name << " was not found!\n";
-            return countVertices + 1;
+            return UNREAL_VALUE;
         }
 
         AdjNode* current = adjLists[from->number].head;
-        if (current == nullptr) return countVertices + 1;
+        if (current == nullptr) return UNREAL_VALUE;
 
         return current->edge->to->number;
     }
@@ -267,22 +269,22 @@ public:
         Vertex* from = findVertexByName(name);
         if (from == nullptr) {
             std::cout << "NEXT: Vertex " << name << " was not found!\n";
-            return countVertices + 1;
+            return UNREAL_VALUE;
         }
 
         AdjNode* current = adjLists[from->number].head;
-        if (current == nullptr) return countVertices + 1;
+        if (current == nullptr) return UNREAL_VALUE;
 
         while (current != nullptr) {
             if (current->edge->to->number == i) {
                 if (current->next != nullptr) return current->edge->to->number;
-                else return countVertices + 1;
+                else return UNREAL_VALUE;
             }
 
             current = current->next;
         }
 
-        return countVertices + 1;
+        return UNREAL_VALUE;
     }
 
     Vertex* VERTEX(const char& name, const size_t& i) const noexcept {
@@ -299,5 +301,43 @@ public:
         }
 
         return nullptr;
+    }
+
+    void DFS(const size_t& currentIndex, size_t* path, size_t& pathLength, float& currentCost) const noexcept {
+        vertices[currentIndex].setVisited();
+        path[pathLength++] = currentIndex;
+
+        auto getEdgeCost = [&](const size_t& from, const size_t& to) -> float {
+            AdjNode* current = adjLists[from].head;
+            while (current != nullptr) {
+                if (current->edge->to->number == to) {
+                    return current->edge->cost;
+                }
+                current = current->next;
+            }
+            return 0.0f;
+        };
+
+        //
+
+        vertices[currentIndex].visited = false;
+    }
+
+    void DFS_START() const noexcept {
+        if (countVertices == 0) {
+            return;
+        }
+
+        size_t* path = new size_t[NV];
+        float currentCost = 0.0f;
+        size_t pathLength = 0;
+
+        for (size_t i = 0; i != NV; ++i) {
+            if (!vertices[i].visited) {
+                DFS(i, path, pathLength, currentCost);
+            }
+        }
+
+        delete[] path;
     }
 };

@@ -7,6 +7,7 @@ void creating(Graph&);
 void test1(Graph&);
 void test2(Graph&);
 void test3(Graph&);
+void test4(Graph&);
 
 int main() {
     size_t x; // длина для задания
@@ -25,6 +26,8 @@ int main() {
 
     test3(graph);
     graph.showAdjacencyList();
+
+    test4(graph);
 
     return 0;
 }
@@ -59,4 +62,8 @@ void test2(Graph& graph) {
 
 void test3(Graph& graph) {
     graph.EDIT_E('A', 'C', 100);
+}
+
+void test4(Graph& graph) {
+    graph.DFS_START();
 }
