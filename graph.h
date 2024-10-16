@@ -47,7 +47,7 @@ private:
 
         if (currentCost == length) {
             if (path[0] != currentIndex) {
-                std::cout << "DFS | ";
+                std::cout << "DFS | x = " << length << " | ";
                 for (size_t i = 0; i != pathLength; ++i) {
                     std::cout << vertices[path[i]].name << ' ';
                 }
@@ -74,8 +74,8 @@ private:
     }
 
 public:
-    Graph(const size_t& cV, const float& x) : 
-    countVertices(cV), countEdges(cV*cV - cV), NE(NV = 0), length(x), deletedCount(0) {
+    Graph(const size_t& cV) : 
+    countVertices(cV), countEdges(cV*cV - cV), deletedCount(NE = NV = 0) {
         vertices = new Vertex[countVertices];
         adjLists = new AdjList[countVertices];
         deletedNumbers = new size_t[countVertices];
@@ -90,23 +90,25 @@ public:
     }
 
     void showAdjacencyList() const noexcept {
-        for (size_t i = 0; i != countVertices; ++i) {
-            if (vertices[i].name == '-') continue;
-            std::cout << vertices[i].name << ": ";
+        for (auto it = VertexIterator::begin(vertices, countVertices); 
+            it != VertexIterator::end(vertices, countVertices); 
+            ++it) {
+            
+            std::cout << (*it).name << ": ";
 
-            AdjNode* current = adjLists[i].head;
-            if (current == nullptr) {
-                std::cout << "NULL";
-            } else {
-                while (current != nullptr) {
-                    std::cout << current->edge->to->name 
-                              << '(' << current->edge->cost << ')';
+            bool isEmpty = true;
+            for (auto adjIt = AdjListIterator::begin(adjLists[(*it).number].head); 
+                adjIt != AdjListIterator::end(); 
+                ++adjIt) {
+                isEmpty = false; // т.к. иное не может в принципе зайти в цикл
 
-                    if (current->next != nullptr) std::cout << ", ";
-                    current = current->next; 
-                }
+                std::cout << (*adjIt)->edge->to->name 
+                        << '(' << (*adjIt)->edge->cost << ')';
+                
+                if ((*adjIt)->next != nullptr) std::cout << ", ";
             }
 
+            if (isEmpty) std::cout << "NULL";
             std::cout << std::endl;
         }
         PRINT_STARS;
@@ -368,5 +370,9 @@ public:
         }
 
         delete[] path;
+    }
+
+    void setLength(const float& x) {
+        length = x;
     }
 };

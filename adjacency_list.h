@@ -28,3 +28,32 @@ struct AdjList {
         }
     }
 };
+
+class AdjListIterator {
+private:
+    AdjNode* current;
+    
+public:
+    AdjListIterator(AdjNode* start) : current(start) {}
+
+    AdjListIterator& operator ++ () noexcept {
+        if (current != nullptr) current = current->next;
+        return *this;
+    }
+
+    AdjNode* operator * () const noexcept {
+        return current;
+    }
+
+    bool operator != (const AdjListIterator& other) const noexcept {
+        return current != other.current;
+    }
+
+    static AdjListIterator begin(AdjNode* start) noexcept {
+        return AdjListIterator(start);
+    }
+
+    static AdjListIterator end() noexcept {
+        return AdjListIterator(nullptr);
+    }
+};
