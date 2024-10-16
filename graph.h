@@ -47,7 +47,6 @@ public:
     }
 
     void showAdjacencyList() const noexcept {
-        PRINT_STARS;
         for (size_t i = 0; i != countVertices; ++i) {
             if (vertices[i].name == '-') continue;
             std::cout << vertices[i].name << ": ";
@@ -260,6 +259,10 @@ public:
         }
 
         AdjNode* current = adjLists[from->number].head;
+        while (current != nullptr && current->edge->to->visited) {
+            current = current->next;
+        }
+
         if (current == nullptr) return UNREAL_VALUE;
 
         return current->edge->to->number;
@@ -273,14 +276,17 @@ public:
         }
 
         AdjNode* current = adjLists[from->number].head;
-        if (current == nullptr) return UNREAL_VALUE;
-
         while (current != nullptr) {
             if (current->edge->to->number == i) {
-                if (current->next != nullptr) return current->edge->to->number;
-                else return UNREAL_VALUE;
-            }
+                current = current->next;
+                while (current != nullptr && current->edge->to->visited) {
+                    current = current->next;
+                }
 
+                if (current == nullptr) return UNREAL_VALUE;
+                return current->edge->to->number;
+            }
+            
             current = current->next;
         }
 
@@ -318,9 +324,32 @@ public:
             return 0.0f;
         };
 
-        //
+        if (currentCost == length) {
+            if (path[0] != currentIndex) {
+                std::cout << "DFS | ";
+                for (size_t i = 0; i != pathLength; ++i) {
+                    std::cout << vertices[path[i]].name << ' ';
+                }
+
+                std::cout << std:: endl;
+                PRINT_STARS;
+            }
+        } else if (currentCost < length) {
+            size_t i = FIRST(vertices[currentIndex].name);
+            while (i != UNREAL_VALUE) {
+                if (!vertices[i].visited) {
+                    float edgeCost = getEdgeCost(currentIndex, i);
+                    currentCost += edgeCost;
+                    DFS(i, path, pathLength, currentCost);
+                    currentCost -= edgeCost; // откатываем вес дуги после рекурсии
+                }
+
+                i = NEXT(vertices[currentIndex].name, i);
+            }
+        }
 
         vertices[currentIndex].visited = false;
+        --pathLength;
     }
 
     void DFS_START() const noexcept {

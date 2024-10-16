@@ -18,14 +18,14 @@ int main() {
     creating(graph);
     graph.showAdjacencyList();
 
-    test1(graph);
-    graph.showAdjacencyList();
+    // test1(graph);
+    // graph.showAdjacencyList();
 
-    test2(graph);
-    graph.showAdjacencyList();
+    // test2(graph);
+    // graph.showAdjacencyList();
 
-    test3(graph);
-    graph.showAdjacencyList();
+    // test3(graph);
+    // graph.showAdjacencyList();
 
     test4(graph);
 
