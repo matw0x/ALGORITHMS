@@ -1,69 +1,45 @@
 #include <iostream>
+#include <utility>
 #include "graph.h"
 
-const size_t COUNT_VERTICES = 6;
+typedef std::tuple<char, char, float> E;
 
-void creating(Graph&);
-void test1(Graph&);
-void test2(Graph&);
-void test3(Graph&);
-void test4(Graph&);
+void creating(Graph& g, const char* v, const E* e, const size_t& cV, const size_t& cE);
+void solve(const Graph& g, const size_t& n);
 
 int main() {
-    size_t x; // длина для задания
+    float x; // длина для задания
     std::cout << "Input length: "; std::cin >> x;
 
-    Graph graph(COUNT_VERTICES, x);
+    const size_t COUNT_VERTICES_1 = 6;
+    const size_t COUNT_EDGES_1 = 8;
 
-    creating(graph);
-    graph.showAdjacencyList();
+    char v1[COUNT_VERTICES_1] = { 'A', 'B', 'C', 'D', 'E', 'F' };
+    E e1[COUNT_EDGES_1] = {
+        {'A', 'B', 5.1}, {'A', 'C', 7}, {'B', 'D', 4.9}, {'C', 'B', 1}, 
+        {'C', 'D', 11}, {'C', 'E', 8}, {'D', 'F', 6}, {'E', 'F', 3}
+    };
 
-    // test1(graph);
-    // graph.showAdjacencyList();
-
-    // test2(graph);
-    // graph.showAdjacencyList();
-
-    // test3(graph);
-    // graph.showAdjacencyList();
-
-    test4(graph);
+    Graph graph1(COUNT_VERTICES_1, x);
+    creating(graph1, v1, e1, COUNT_VERTICES_1, COUNT_EDGES_1);
+    solve(graph1, 1);
 
     return 0;
 }
 
-void creating(Graph& graph) {
-    graph.ADD_V('A');
-    graph.ADD_V('B');
-    graph.ADD_V('C');
-    graph.ADD_V('D');
-    graph.ADD_V('E');
-    graph.ADD_V('F');
+void creating(Graph& g, const char* v, const E* e, const size_t& cV, const size_t& cE) {
+    for (size_t i = 0; i != cV; ++i) {
+        g.ADD_V(v[i]);
+    }
 
-    graph.ADD_E('A', 'B', 5);
-    graph.ADD_E('A', 'C', 7);
-    graph.ADD_E('B', 'D', 4);
-    graph.ADD_E('C', 'B', 1);
-    graph.ADD_E('C', 'D', 11);
-    graph.ADD_E('C', 'E', 8);
-    graph.ADD_E('D', 'F', 6);
-    graph.ADD_E('E', 'F', 3);
+    for (size_t i = 0; i != cE; ++i) {
+        g.ADD_E(std::get<0>(e[i]), std::get<1>(e[i]), std::get<2>(e[i]));
+    }
 }
 
-void test1(Graph& graph) {
-    graph.DEL_V('A');
-}
-
-void test2(Graph& graph) {
-    graph.ADD_V('A');
-    graph.ADD_E('A', 'C', 7);
-    graph.ADD_E('A', 'B', 5);
-}
-
-void test3(Graph& graph) {
-    graph.EDIT_E('A', 'C', 100);
-}
-
-void test4(Graph& graph) {
-    graph.DFS_START();
+void solve(const Graph& g, const size_t& n) {
+    std::cout << "GRAPH #" << n << std::endl;
+    g.showAdjacencyList();
+    g.DFS_START();
+    std::cout << std::endl;
 }

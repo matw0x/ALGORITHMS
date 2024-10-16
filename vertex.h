@@ -15,17 +15,13 @@ struct Vertex {
         visited = true;
     }
 
-    void unsetVisited() noexcept {
-        visited = false;
-    }
-
     void operator = (const Vertex& v) {
         name = v.name;
         number = v.number;
         visited = v.visited;
     }
 
-    bool operator == (const Vertex* v) {
+    bool operator == (const Vertex* v) const noexcept {
         return this->name == v->name && this->number == v->number;
     }
 };
