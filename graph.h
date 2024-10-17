@@ -52,7 +52,7 @@ private:
                     std::cout << vertices[path[i]].name << ' ';
                 }
 
-                std::cout << std:: endl;
+                std::cout << std::endl;
                 PRINT_STARS;
             }
         } else if (currentCost < length) {
@@ -72,7 +72,7 @@ private:
         vertices[currentIndex].visited = false;
         --pathLength;
     }
-
+    
 public:
     Graph(const size_t& cV) : 
     countVertices(cV), countEdges(cV*cV - cV), deletedCount(NE = NV = 0) {
@@ -359,14 +359,16 @@ public:
             return;
         }
 
-        size_t* path = new size_t[NV];
+        size_t* path = new size_t[countVertices];
         float currentCost = 0.0f;
         size_t pathLength = 0;
 
-        for (size_t i = 0; i != NV; ++i) {
+        for (size_t i = 0; i != countVertices; ++i) {
             if (!vertices[i].visited) {
                 DFS(i, path, pathLength, currentCost);
             }
+            currentCost = 0.0f;
+            pathLength = 0;
         }
 
         delete[] path;

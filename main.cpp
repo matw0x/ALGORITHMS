@@ -82,8 +82,8 @@ int main() {
     creating(graph3, v3, e3, COUNT_VERTICES_3, COUNT_EDGES_3);
     std::cout << "GRAPH #3\n";
     graph3.showAdjacencyList();
-    solveWithInput(graph3);
-    // solveWithCycle(graph3);
+    // solveWithInput(graph3);
+    solveWithCycle(graph3);
 
     return 0;
 }
@@ -108,7 +108,7 @@ void solveWithInput(Graph& g) {
 }
 
 void solveWithCycle(Graph& g) {
-    for (int i = 0; i <= 1e5; ++i) {
+    for (int i = 0; i <= 5e3; ++i) {
         float x = i * 0.1f;
         g.setLength(x);
         g.DFS_START();
