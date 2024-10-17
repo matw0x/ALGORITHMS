@@ -22,8 +22,8 @@ int main() {
     creating(graph1, v1, e1, COUNT_VERTICES_1, COUNT_EDGES_1);
     std::cout << "GRAPH #1\n";
     graph1.showAdjacencyList();
-    // solveWithInput(graph1);
-    solveWithCycle(graph1);
+    solveWithInput(graph1);
+    // solveWithCycle(graph1);
 
     // ***************************************************************
 
@@ -47,13 +47,13 @@ int main() {
     creating(graph2, v2, e2, COUNT_VERTICES_2, COUNT_EDGES_2);
     std::cout << "GRAPH #2\n";
     graph2.showAdjacencyList();
-    // solveWithInput(graph2);
-    solveWithCycle(graph2);
+    solveWithInput(graph2);
+    // solveWithCycle(graph2);
 
     // ***************************************************************
 
     const size_t COUNT_VERTICES_3 = 40;
-    const size_t COUNT_EDGES_3 = 55;
+    const size_t COUNT_EDGES_3 = 57;
 
     char v3[COUNT_VERTICES_3] = { 
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
@@ -75,15 +75,15 @@ int main() {
         {'0', '*', 1}, {'1', '2', 2}, {'2', 'Z', 2}, {'3', '4', 1},
         {'4', '5', 1}, {'5', '6', 1}, {'6', '7', 1}, {'7', '8', 1},
         {'8', '9', 1}, {'9', '2', 200}, {'9', '0', 1}, {'*', '$', 1},
-        {'$', '@', 1}, {'@', '#', 1}, {'#', '3', 1}
+        {'$', '@', 1}, {'@', '#', 1}, {'#', '3', 1}, {'3', 'T', 3}, {'3', 'S', 5}
     };
 
     Graph graph3(COUNT_VERTICES_3);
     creating(graph3, v3, e3, COUNT_VERTICES_3, COUNT_EDGES_3);
     std::cout << "GRAPH #3\n";
     graph3.showAdjacencyList();
-    // solveWithInput(graph3);
-    solveWithCycle(graph3);
+    solveWithInput(graph3);
+    // solveWithCycle(graph3);
 
     return 0;
 }

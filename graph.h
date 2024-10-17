@@ -355,7 +355,7 @@ public:
     }
 
     void DFS_START() const noexcept {
-        if (countVertices == 0) {
+        if (NV == 0 || countVertices == 0) {
             return;
         }
 
@@ -363,7 +363,7 @@ public:
         float currentCost = 0.0f;
         size_t pathLength = 0;
 
-        for (size_t i = 0; i != countVertices; ++i) {
+        for (size_t i = 0; i != NV; ++i) {
             if (!vertices[i].visited) {
                 DFS(i, path, pathLength, currentCost);
             }
