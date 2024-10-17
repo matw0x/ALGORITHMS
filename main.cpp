@@ -50,6 +50,41 @@ int main() {
     // solveWithInput(graph2);
     solveWithCycle(graph2);
 
+    // ***************************************************************
+
+    const size_t COUNT_VERTICES_3 = 40;
+    const size_t COUNT_EDGES_3 = 55;
+
+    char v3[COUNT_VERTICES_3] = { 
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
+        'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
+        'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', 
+        '4', '5', '6', '7', '8', '9', '*', '$', '@', '#'
+    };
+    E e3[COUNT_EDGES_3] = {
+        {'A', 'B', 2}, {'A', 'C', 1}, {'B', 'C', 1}, {'B', 'H', 2}, 
+        {'C', 'G', 2}, {'C', 'F', 8}, {'D', 'A', 15}, {'E', 'D', 4},
+        {'E', 'F', 6.7}, {'F', 'D', 3}, {'G', 'F', 7.5}, {'H', 'G', 0.5},
+        {'H', 'J', 2}, {'I', 'E', 4}, {'I', 'F', 11}, {'J', '1', 2},
+        {'K', 'M', 3}, {'K', 'I', 2}, {'K', 'E', 6}, {'L', 'M', 6},
+        {'M', 'I', 0.5}, {'M', 'G', 0.5}, {'M', 'H', 3}, {'M', 'J', 4},
+        {'M', '1', 5}, {'N', 'M', 6}, {'O', 'M', 2.3}, {'P', 'M', 40.4},
+        {'Q', 'M', 30.1}, {'R', 'M', 20}, {'S', 'M', 19}, {'S', 'T', 2},
+        {'T', 'K', 7.3}, {'U', 'X', 15.6}, {'V', 'U', 3.8}, {'W', 'X', 3.8},
+        {'X', 'U', 15.6}, {'Y', 'V', 15.6}, {'Y', 'W', 15.6}, {'Z', 'Y', 2},
+        {'0', '*', 1}, {'1', '2', 2}, {'2', 'Z', 2}, {'3', '4', 1},
+        {'4', '5', 1}, {'5', '6', 1}, {'6', '7', 1}, {'7', '8', 1},
+        {'8', '9', 1}, {'9', '2', 200}, {'9', '0', 1}, {'*', '$', 1},
+        {'$', '@', 1}, {'@', '#', 1}, {'#', '3', 1}
+    };
+
+    Graph graph3(COUNT_VERTICES_3);
+    creating(graph3, v3, e3, COUNT_VERTICES_3, COUNT_EDGES_3);
+    std::cout << "GRAPH #3\n";
+    graph3.showAdjacencyList();
+    solveWithInput(graph3);
+    // solveWithCycle(graph3);
+
     return 0;
 }
 
@@ -73,7 +108,7 @@ void solveWithInput(Graph& g) {
 }
 
 void solveWithCycle(Graph& g) {
-    for (int i = 0; i <= 1e4; ++i) {
+    for (int i = 0; i <= 1e5; ++i) {
         float x = i * 0.1f;
         g.setLength(x);
         g.DFS_START();
